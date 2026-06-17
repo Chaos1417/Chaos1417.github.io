@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rauf Hassan — Cybersecurity Researcher specializing in Vulnerability Assessment, Network Security Architecture, and Security Analysis. BS Computer Science student at Lahore Garrison University.">
+    <meta name="author" content="Rauf Hassan">
+    <meta name="theme-color" content="#0B0F19">
+    <meta property="og:title" content="Rauf Hassan — Cybersecurity Researcher">
+    <meta property="og:description" content="Vulnerability Assessment & Security Analysis. Portfolio of Rauf Hassan.">
+    <meta property="og:type" content="website">
+    <title>Rauf Hassan — Cybersecurity Researcher</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="cursor-glow" aria-hidden="true"></div>
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- ═══ MOBILE NAVBAR ═══ -->
+    <nav id="mobile-navbar">
+        <div class="mobile-navbar-inner">
+            <a href="#" class="nav-callsign">rauf.hassan</a>
+            <button class="hamburger" id="hamburger-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu-panel">
+            <a href="#s-about" class="mobile-nav-link">About</a>
+            <a href="#s-experience" class="mobile-nav-link">Experience</a>
+            <a href="#s-education" class="mobile-nav-link">Education</a>
+            <a href="#s-projects" class="mobile-nav-link">Projects</a>
+            <a href="#s-certs" class="mobile-nav-link">Certifications</a>
+            <a href="#s-skills" class="mobile-nav-link">Skills & Languages</a>
+            <a href="#s-interests" class="mobile-nav-link">Beyond the Screen</a>
+        </div>
+    </nav>
+
+    <!-- ═══ SPLIT LAYOUT ═══ -->
+    <div class="site-layout">
+
+        <!-- ─── LEFT SIDEBAR ─── -->
+        <header class="sidebar">
+            <div class="sidebar-inner">
+                <div class="sidebar-top">
+                    <h1 class="sidebar-name">Rauf Hassan</h1>
+                    <h2 class="sidebar-role">Cybersecurity Researcher</h2>
+                    <p class="sidebar-bio">Vulnerability Assessment &amp; Security Analysis.</p>
+                </div>
+
+                <nav class="sidebar-nav" id="desktop-nav" aria-label="Primary navigation">
+                    <a href="#s-about" class="sidebar-nav-link active" data-section="s-about">
+                        <span class="nav-line"></span><span class="nav-label">About</span>
+                    </a>
+                    <a href="#s-experience" class="sidebar-nav-link" data-section="s-experience">
+                        <span class="nav-line"></span><span class="nav-label">Experience</span>
+                    </a>
+                    <a href="#s-education" class="sidebar-nav-link" data-section="s-education">
+                        <span class="nav-line"></span><span class="nav-label">Education</span>
+                    </a>
+                    <a href="#s-projects" class="sidebar-nav-link" data-section="s-projects">
+                        <span class="nav-line"></span><span class="nav-label">Projects</span>
+                    </a>
+                    <a href="#s-certs" class="sidebar-nav-link" data-section="s-certs">
+                        <span class="nav-line"></span><span class="nav-label">Certifications</span>
+                    </a>
+                    <a href="#s-skills" class="sidebar-nav-link" data-section="s-skills">
+                        <span class="nav-line"></span><span class="nav-label">Skills &amp; Languages</span>
+                    </a>
+                    <a href="#s-interests" class="sidebar-nav-link" data-section="s-interests">
+                        <span class="nav-line"></span><span class="nav-label">Beyond the Screen</span>
+                    </a>
+                </nav>
+
+                <div class="sidebar-socials">
+                    <a href="https://github.com/Chaos1417" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/rauf-hassan" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                    </a>
+                    <a href="mailto:raufh1417@gmail.com" aria-label="Email" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    </a>
+                    <a href="https://tryhackme.com/p/Kaos1417" target="_blank" rel="noopener noreferrer" aria-label="TryHackMe" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ─── RIGHT CONTENT ─── -->
+        <main class="content">
+
+            <!-- ═══ ABOUT ═══ -->
+            <section id="s-about">
+                <p class="body-text">
+                    I am a 6th semester Computer Science student at
+                    <span class="text-hl">Lahore Garrison University</span> with a strong focus on
+                    network security and vulnerability assessment. I have been building real world
+                    defense systems and analyzing network infrastructures. I am actively seeking
+                    internships to apply my academic foundation to enterprise risk management and
+                    help safeguard data.
+                </p>
+            </section>
+
+            <!-- ═══ EXPERIENCE & LABS ═══ -->
+            <section id="s-experience">
+                <h2 class="section-heading thrown">Experience &amp; Labs</h2>
+
+                <!-- TryHackMe -->
+                <div class="entry-card thrown">
+                    <div class="entry-meta"><span class="entry-date">Ongoing</span></div>
+                    <div class="entry-body">
+                        <div class="entry-title-row">
+                            <h3 class="entry-title">Offensive Security Training <span class="entry-org">· TryHackMe</span></h3>
+                            <img src="./THM_LOGO.png" alt="TryHackMe" class="org-logo" loading="lazy">
+                        </div>
+                        <p class="entry-description">
+                            Practicing structured offensive security under the handle
+                            <span class="text-hl">Kaos1417</span>. Currently ranked in the
+                            <span class="text-hl">Top 40%</span> globally with
+                            <span class="text-hl">10 completed rooms</span> spanning web exploitation,
+                            reconnaissance, and foundational security methodology.
+                        </p>
+                        <div class="stats-row">
+                            <div class="stat-block">
+                                <span class="stat-value">Top 40%</span>
+                                <span class="stat-label">Global Rank</span>
+                            </div>
+                            <div class="stat-block">
+                                <span class="stat-value">10</span>
+                                <span class="stat-label">Rooms Completed</span>
+                            </div>
+                            <div class="stat-block">
+                                <span class="stat-value">Kaos1417</span>
+                                <span class="stat-label">Handle</span>
+                            </div>
+                        </div>
+                        <div class="entry-tags">
+                            <span class="tag">Authentication Bypass</span>
+                            <span class="tag">Content Discovery</span>
+                            <span class="tag">Subdomain Enumeration</span>
+                            <span class="tag">Pentesting Fundamentals</span>
+                            <span class="tag">Offensive Security Intro</span>
+                            <span class="tag">Defensive Security Intro</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hack The Box -->
+                <div class="entry-card thrown">
+                    <div class="entry-meta"><span class="entry-date">Ongoing</span></div>
+                    <div class="entry-body">
+                        <div class="entry-title-row">
+                            <h3 class="entry-title">Penetration Testing Labs <span class="entry-org">· Hack The Box</span></h3>
+                            <img src="./HTB_LOGO.png" alt="Hack The Box" class="org-logo" loading="lazy">
+                        </div>
+                        <p class="entry-description">
+                            Working through realistic enterprise lab environments: Active Directory
+                            attack chains, network pivoting, service enumeration, and exploitation
+                            in sandboxed settings.
+                        </p>
+                        <div class="entry-tags">
+                            <span class="tag">Active Directory</span>
+                            <span class="tag">Network Pivoting</span>
+                            <span class="tag">Service Enumeration</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══ EDUCATION ═══ -->
+            <section id="s-education">
+                <h2 class="section-heading thrown">Education</h2>
+
+                <!-- LGU (hover to reveal grades) -->
+                <div class="entry-card edu-card thrown">
+                    <div class="entry-meta"><span class="entry-date">2023 to Present</span></div>
+                    <div class="entry-body">
+                        <div class="entry-title-row">
+                            <h3 class="entry-title">BS Computer Science <span class="entry-org">· Lahore Garrison University</span></h3>
+                            <img src="./Lgu_LOGO.jpeg" alt="Lahore Garrison University" class="org-logo" loading="lazy">
+                        </div>
+                        <p class="entry-description">
+                            Currently in my 6th semester with a CGPA of <span class="text-hl">3.02</span>.
+                            Focused on network security, operating systems, and applied AI.
+                        </p>
+                        <!-- Grades revealed on hover -->
+                        <div class="coursework-grid">
+                            <div class="course-item"><span class="course-name">Object Oriented Programming</span><span class="course-grade grade-a">A</span></div>
+                            <div class="course-item"><span class="course-name">Programming Fundamentals</span><span class="course-grade grade-a">A</span></div>
+                            <div class="course-item"><span class="course-name">Data Structures</span><span class="course-grade grade-b">B</span></div>
+                            <div class="course-item"><span class="course-name">Database Systems</span><span class="course-grade grade-b">B</span></div>
+                            <div class="course-item"><span class="course-name">Operating Systems</span><span class="course-grade grade-b">B</span></div>
+                            <div class="course-item"><span class="course-name">Artificial Intelligence</span><span class="course-grade grade-b">B</span></div>
+                        </div>
+                        <div class="entry-tags">
+                            <span class="tag">CGPA 3.02</span>
+                            <span class="tag">6th Semester</span>
+                            <span class="tag">Lahore, Pakistan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cadet College -->
+                <div class="entry-card thrown">
+                    <div class="entry-meta"><span class="entry-date">2021 to 2023</span></div>
+                    <div class="entry-body">
+                        <div class="entry-title-row">
+                            <h3 class="entry-title">Intermediate, Pre-Medical <span class="entry-org">· Pakistan Scouts Cadet College Batrasi</span></h3>
+                            <img src="./PSCCB_Logo.jpeg" alt="PSCCB" class="org-logo" loading="lazy">
+                        </div>
+                        <p class="entry-description">
+                            Completed FSc Pre-Medical from BISE Abbottabad, scoring
+                            <span class="text-hl">78% (Grade A)</span>.
+                        </p>
+                        <div class="entry-tags">
+                            <span class="tag">78%, Grade A</span>
+                            <span class="tag">BISE Abbottabad</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Matric -->
+                <div class="entry-card thrown">
+                    <div class="entry-meta"><span class="entry-date">2021</span></div>
+                    <div class="entry-body">
+                        <div class="entry-title-row">
+                            <h3 class="entry-title">Matriculation, Science <span class="entry-org">· Qazi Grammar Boys High School, Lahore</span></h3>
+                            <img src="./QGS_logo.jpeg" alt="QGS" class="org-logo" loading="lazy">
+                        </div>
+                        <p class="entry-description">
+                            Scored <span class="text-hl">1074 / 1100 (97%)</span> in the Science/Biology
+                            track from BISE Lahore.
+                        </p>
+                        <div class="entry-tags">
+                            <span class="tag">1074/1100</span>
+                            <span class="tag">97%</span>
+                            <span class="tag">BISE Lahore</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══ PROJECTS ═══ -->
+            <section id="s-projects">
+                <h2 class="section-heading thrown">Projects</h2>
+
+                <!-- Hospital Network -->
+                <a href="https://github.com/Chaos1417/Hospital-Network-Project" target="_blank" rel="noopener noreferrer" class="entry-card project-link-card thrown">
+                    <div class="entry-meta"><span class="entry-date">Network Security</span></div>
+                    <div class="entry-body">
+                        <h3 class="entry-title project-title-hoverable">
+                            Smart Hospital Network Security Architecture
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                        </h3>
+                        <p class="entry-description">
+                            Redesigned the network of Al-Shifa Smart Hospital, a fictional 600-bed
+                            tertiary-care facility that previously operated on a flat, unmanaged
+                            broadcast domain. The new architecture implements a HIPAA-aligned,
+                            three-tier hierarchical topology in Cisco Packet Tracer, deploying
+                            12 isolated VLANs across a VLSM-subnetted 192.168.10.0/24 address
+                            space. OSPF Area 0 connects the main campus to a remote Branch Clinic
+                            over a serial WAN link. Security is enforced through Extended ACLs
+                            (GUEST_ISOLATION), NAT Overload (PAT), Port Security with sticky
+                            MAC learning, PortFast, BPDU Guard, and SSH-only management access.
+                            QoS for VoIP uses a dedicated Voice VLAN with MLS QoS CoS trust
+                            boundaries. EtherChannel (LACP) provides core-layer redundancy.
+                        </p>
+                        <div class="entry-tags">
+                            <span class="tag">12 VLANs</span>
+                            <span class="tag">OSPF Area 0</span>
+                            <span class="tag">Extended ACLs</span>
+                            <span class="tag">NAT/PAT</span>
+                            <span class="tag">VLSM</span>
+                            <span class="tag">Port Security</span>
+                            <span class="tag">EtherChannel</span>
+                            <span class="tag">QoS VoIP</span>
+                            <span class="tag">Cisco Packet Tracer</span>
+                            <span class="tag">HIPAA</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Smart-Pay -->
+                <a href="https://github.com/Chaos1417/Smart-Pay" target="_blank" rel="noopener noreferrer" class="entry-card project-link-card thrown">
+                    <div class="entry-meta"><span class="entry-date">Full-Stack</span></div>
+                    <div class="entry-body">
+                        <h3 class="entry-title project-title-hoverable">
+                            Smart-Pay: Secure Digital Wallet
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                        </h3>
+                        <p class="entry-description">
+                            A modern digital wallet application for personal financial management,
+                            built with ASP.NET Core, Entity Framework Core, and SQL Server. Features
+                            include JWT-powered stateless authentication, a real-time dashboard with
+                            balance overview and transaction history, seamless fund transfers to
+                            managed beneficiaries, and ACID-compliant database operations. The system
+                            enforces Role-Based Access Control (RBAC) with distinct User and Admin
+                            roles. The frontend is built with Tailwind CSS for a responsive experience
+                            across all devices.
+                        </p>
+                        <div class="entry-tags">
+                            <span class="tag">ASP.NET Core</span>
+                            <span class="tag">Entity Framework</span>
+                            <span class="tag">SQL Server</span>
+                            <span class="tag">JWT Auth</span>
+                            <span class="tag">RBAC</span>
+                            <span class="tag">ACID Transactions</span>
+                            <span class="tag">Tailwind CSS</span>
+                            <span class="tag">REST API</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- CKD Prediction -->
+                <a href="https://github.com/Chaos1417/ckd-web-app" target="_blank" rel="noopener noreferrer" class="entry-card project-link-card thrown">
+                    <div class="entry-meta"><span class="entry-date">Machine Learning</span></div>
+                    <div class="entry-body">
+                        <h3 class="entry-title project-title-hoverable">
+                            CKD Prediction: ML Diagnostic System
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                        </h3>
+                        <p class="entry-description">
+                            A production-grade machine learning system for diagnosing Chronic Kidney
+                            Disease, reproducing and extending the methodology of Rahman et al. (2024).
+                            Evaluates five ensemble classifiers (Random Forest, Gradient Boosting,
+                            AdaBoost, Extra Trees, and XGBoost) across both RFE and Boruta feature
+                            selection schemes (10 experimental conditions). Uses a rigorous two-stage
+                            leakage-prevention splitting protocol and SVMSMOTE for class balancing.
+                            The best model (tuned Extra Trees, RFE, 12 features) is deployed as a
+                            Streamlit web app augmented by a Groq API / Llama3-8b natural-language
+                            explanation engine. Built on the UCI CKD dataset (400 records, 24 features).
+                        </p>
+                        <div class="entry-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Streamlit</span>
+                            <span class="tag">Extra Trees</span>
+                            <span class="tag">MICE Imputation</span>
+                            <span class="tag">SVMSMOTE</span>
+                            <span class="tag">RFE vs Boruta</span>
+                            <span class="tag">Groq / Llama3</span>
+                            <span class="tag">UCI Dataset</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- EdTech WhatsApp Bot -->
+                <a href="https://github.com/Chaos1417/Edtech-Whatsapp-bot" target="_blank" rel="noopener noreferrer" class="entry-card project-link-card thrown">
+                    <div class="entry-meta"><span class="entry-date">AI Automation</span></div>
+                    <div class="entry-body">
+                        <h3 class="entry-title project-title-hoverable">
+                            EdTech WhatsApp Bot: Academic AI Assistant
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                        </h3>
+                        <p class="entry-description">
+                            A multi-agent, event-driven automation system built on n8n that turns
+                            WhatsApp into a unified academic assistant. Four orchestrated workflows
+                            handle the pipeline: an Ingestor polls Google Classroom every 15 minutes
+                            via OAuth2, caching active assignments in Redis; a Responder routes
+                            incoming WhatsApp messages through a Mistral Large LLM agent equipped
+                            with tools for homework retrieval, PDF document parsing, and end-to-end
+                            solution generation; a Solve Assignment workflow downloads PDFs from
+                            Google Drive, generates solutions, fills Google Docs templates, and
+                            exports formatted PDFs; and a Deadline Watcher proactively sends alerts
+                            12 hours before due dates.
+                        </p>
+                        <div class="entry-tags">
+                            <span class="tag">n8n</span>
+                            <span class="tag">WhatsApp API</span>
+                            <span class="tag">Mistral Large</span>
+                            <span class="tag">Google Classroom</span>
+                            <span class="tag">Redis</span>
+                            <span class="tag">Google Drive API</span>
+                            <span class="tag">OAuth2</span>
+                            <span class="tag">Multi-Agent</span>
+                        </div>
+                    </div>
+                </a>
+            </section>
+
+            <!-- ═══ CERTIFICATIONS ═══ -->
+            <section id="s-certs">
+                <h2 class="section-heading thrown">Certifications</h2>
+                <ul class="cert-list">
+                    <li class="cert-item thrown">
+                        <img src="./cert_Logo.jpeg" alt="Google" class="cert-logo" loading="lazy">
+                        <div class="cert-info">
+                            <h3 class="cert-name">Foundations of Cybersecurity</h3>
+                            <span class="cert-issuer">Google Cybersecurity Professional Certificate · Coursera</span>
+                        </div>
+                    </li>
+                    <li class="cert-item thrown">
+                        <img src="./cert_Logo.jpeg" alt="Google" class="cert-logo" loading="lazy">
+                        <div class="cert-info">
+                            <h3 class="cert-name">Play It Safe: Manage Security Risks</h3>
+                            <span class="cert-issuer">Google Cybersecurity Professional Certificate · Coursera</span>
+                        </div>
+                    </li>
+                    <li class="cert-item thrown">
+                        <img src="./cert_Logo.jpeg" alt="Google" class="cert-logo" loading="lazy">
+                        <div class="cert-info">
+                            <h3 class="cert-name">Connect and Protect: Networks &amp; Network Security</h3>
+                            <span class="cert-issuer">Google Cybersecurity Professional Certificate · Coursera</span>
+                        </div>
+                    </li>
+                    <li class="cert-item thrown">
+                        <img src="./cert_Logo.jpeg" alt="Google" class="cert-logo" loading="lazy">
+                        <div class="cert-info">
+                            <h3 class="cert-name">Tools of the Trade: Linux and SQL</h3>
+                            <span class="cert-issuer">Google Cybersecurity Professional Certificate · Coursera</span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- ═══ SKILLS & LANGUAGES ═══ -->
+            <section id="s-skills">
+                <h2 class="section-heading thrown">Skills &amp; Languages</h2>
+                <div class="skills-grid">
+                    <div class="skill-group thrown">
+                        <h3 class="skill-group-title">Networking</h3>
+                        <div class="skill-tags">
+                            <span class="tag">Cisco IOS</span><span class="tag">VLANs</span>
+                            <span class="tag">OSPF</span><span class="tag">ACLs</span>
+                            <span class="tag">NAT/PAT</span><span class="tag">TCP/IP</span>
+                            <span class="tag">Subnetting / VLSM</span><span class="tag">Port Security</span>
+                            <span class="tag">EtherChannel</span>
+                        </div>
+                    </div>
+                    <div class="skill-group thrown">
+                        <h3 class="skill-group-title">Security Tooling</h3>
+                        <div class="skill-tags">
+                            <span class="tag">Wireshark</span><span class="tag">Nmap</span>
+                            <span class="tag">Burp Suite</span><span class="tag">OWASP ZAP</span>
+                            <span class="tag">Metasploit</span>
+                        </div>
+                    </div>
+                    <div class="skill-group thrown">
+                        <h3 class="skill-group-title">Platforms &amp; Cloud</h3>
+                        <div class="skill-tags">
+                            <span class="tag">Kali Linux</span><span class="tag">Windows Server</span>
+                            <span class="tag">AWS EC2</span><span class="tag">Cisco Packet Tracer</span>
+                        </div>
+                    </div>
+                    <div class="skill-group thrown">
+                        <h3 class="skill-group-title">Programming</h3>
+                        <div class="skill-tags">
+                            <span class="tag">Python</span><span class="tag">C#</span>
+                            <span class="tag">SQL</span><span class="tag">Bash</span>
+                        </div>
+                    </div>
+                    <div class="skill-group thrown">
+                        <h3 class="skill-group-title">Languages</h3>
+                        <div class="skill-tags">
+                            <span class="tag lang-tag">English (Proficient)</span>
+                            <span class="tag lang-tag">Urdu (Native)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══ BEYOND THE SCREEN ═══ -->
+            <section id="s-interests">
+                <h2 class="section-heading thrown">Beyond the Screen</h2>
+                <div class="interests-grid">
+                    <div class="interest-card thrown">
+                        <div class="interest-icon-wrap">
+                            <i data-lucide="book-open" style="width:22px;height:22px;"></i>
+                        </div>
+                        <h3 class="interest-title">Literature</h3>
+                        <p class="interest-text">
+                            Reading classical and philosophical literature. Dostoevsky's exploration
+                            of moral complexity, dystopian fiction, and psychological thrillers.
+                        </p>
+                    </div>
+                    <div class="interest-card thrown">
+                        <div class="interest-icon-wrap">
+                            <i data-lucide="tv" style="width:22px;height:22px;"></i>
+                        </div>
+                        <h3 class="interest-title">Visual Storytelling</h3>
+                        <p class="interest-text">
+                            Exploring visual storytelling through anime and manga. Drawn to
+                            intricate world-building, layered characters, and narratives that
+                            embrace moral ambiguity.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══ FOOTER ═══ -->
+            <footer id="s-footer">
+                <p class="footer-text">&copy; 2026 Rauf Hassan</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>lucide.createIcons();</script>
+    <script src="app.js"></script>
+</body>
+</html>
