@@ -1,282 +1,292 @@
 /* ============================================================
-   app.js — "Thrown" Animations, Particle Physics, ScrollSpy
-   Dependencies: GSAP 3.x + ScrollTrigger (CDN)
+   app.js — Interactive Controller
+   Pop-up Section Transitions, Horizontal Scroll, Precise Nav
    ============================================================ */
 
-/* ----------------------------------------------------------
-   1. CURSOR GLOW
-   ---------------------------------------------------------- */
-function initCursorGlow() {
-  const glow = document.getElementById('cursor-glow');
-  if (!glow || window.matchMedia('(pointer: coarse)').matches) {
-    if (glow) glow.style.display = 'none';
-    return;
-  }
-  document.addEventListener('mousemove', (e) => {
-    glow.style.setProperty('--glow-x', e.clientX + 'px');
-    glow.style.setProperty('--glow-y', e.clientY + 'px');
-  }, { passive: true });
-}
+(function() {
+  'use strict';
 
-/* ----------------------------------------------------------
-   2. ENHANCED PARTICLE CANVAS
-   - Node opacity: 0.4
-   - Connection threshold: 150px
-   - Mouse repulsion radius: 200px
-   ---------------------------------------------------------- */
-class ParticleField {
-  constructor(id) {
-    this.canvas = document.getElementById(id);
-    if (!this.canvas) return;
-    this.ctx = this.canvas.getContext('2d');
-    this.particles = [];
-    this.mouse = { x: -9999, y: -9999 };
-    this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+  document.addEventListener('DOMContentLoaded', init);
 
-    this.COUNT = 80;
-    this.CONNECT = 150;
-    this.REPEL_R = 200;
-    this.REPEL_F = 14;
-    this.BASE_A = 0.4;
+  function init() {
+    initCursor();
+    initParticles();
 
-    this._resize();
-    this._seed();
-    this._bind();
-    this._loop();
-  }
-
-  _resize() {
-    this.w = window.innerWidth;
-    this.h = window.innerHeight;
-    this.canvas.width = this.w * this.dpr;
-    this.canvas.height = this.h * this.dpr;
-    this.canvas.style.width = this.w + 'px';
-    this.canvas.style.height = this.h + 'px';
-    this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
-  }
-
-  _seed() {
-    this.particles = [];
-    for (let i = 0; i < this.COUNT; i++) {
-      this.particles.push({
-        x: Math.random() * this.w,
-        y: Math.random() * this.h,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        r: Math.random() * 2 + 0.8,
-        a: this.BASE_A * (Math.random() * 0.5 + 0.5),
-      });
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      console.warn('GSAP not loaded.');
+      return;
     }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    initPreciseNav();
+    initPopUpTransitions();
+    initHorizontalProjects();
+    initSmoothAnchorScroll();
   }
 
-  _bind() {
-    let rt;
-    window.addEventListener('resize', () => {
-      clearTimeout(rt);
-      rt = setTimeout(() => {
-        this._resize();
-        this.particles.forEach(p => {
-          if (p.x > this.w) p.x = Math.random() * this.w;
-          if (p.y > this.h) p.y = Math.random() * this.h;
+  /* ----------------------------------------------------------
+     1. PRECISE TOP NAVIGATION INDICATOR
+     Monitors section positions with 100% precision
+     ---------------------------------------------------------- */
+  function initPreciseNav() {
+    const navLinks = document.querySelectorAll('.header-nav .nav-link');
+    const sections = gsap.utils.toArray('.page-section');
+
+    if (!navLinks.length || !sections.length) return;
+
+    sections.forEach((section) => {
+      const sectionId = section.getAttribute('id');
+      if (!sectionId) return;
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 55%',
+        end: 'bottom 55%',
+        onToggle: (self) => {
+          if (self.isActive) {
+            navLinks.forEach((link) => {
+              const isMatch = link.getAttribute('data-section') === sectionId;
+              link.classList.toggle('active', isMatch);
+            });
+          }
+        }
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------
+     2. POP-UP FROM BENEATH SECTION TRANSITIONS
+     Sections pop up and expand as you scroll into them
+     ---------------------------------------------------------- */
+  function initPopUpTransitions() {
+    if (window.innerWidth <= 1024) return; // Normal scroll on mobile
+
+    const cards = gsap.utils.toArray('.section-card');
+
+    cards.forEach((card, index) => {
+      if (index === 0) return; // Skip Hero card initial state
+
+      // Initial state: scaled down, slightly translated down, faded
+      gsap.set(card, {
+        scale: 0.88,
+        opacity: 0.3,
+        y: 100,
+        filter: 'blur(8px)'
+      });
+
+      // Animate to full presence as viewport scrolls to it
+      gsap.to(card, {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: card.parentElement,
+          start: 'top 85%',
+          end: 'top 25%',
+          scrub: 1.2,
+        }
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------
+     3. SILKY HORIZONTAL PROJECTS SHOWCASE
+     ---------------------------------------------------------- */
+  function initHorizontalProjects() {
+    if (window.innerWidth <= 1024) return;
+
+    const section = document.querySelector('.projects-section');
+    const viewport = document.querySelector('.projects-viewport');
+    const track = document.querySelector('.projects-track');
+
+    if (!section || !viewport || !track) return;
+
+    function getScrollAmount() {
+      const trackWidth = track.scrollWidth;
+      const viewportWidth = window.innerWidth;
+      const headerWidth = 320 + 64; // Header width + margin
+      return Math.max(0, trackWidth - (viewportWidth - headerWidth - 100));
+    }
+
+    const scrollDistance = getScrollAmount();
+    if (scrollDistance <= 0) return;
+
+    gsap.to(track, {
+      x: -scrollDistance,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: () => `+=${scrollDistance + 400}`,
+        pin: true,
+        scrub: 1.2,
+        invalidateOnRefresh: true,
+        anticipatePin: 1
+      }
+    });
+  }
+
+  /* ----------------------------------------------------------
+     4. SMOOTH ANCHOR SCROLLING
+     ---------------------------------------------------------- */
+  function initSmoothAnchorScroll() {
+    document.querySelectorAll('.header-nav a, .site-header a').forEach((anchor) => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (!targetId || !targetId.startsWith('#')) return;
+        
+        e.preventDefault();
+        const targetEl = document.querySelector(targetId);
+        if (!targetEl) return;
+
+        // Use GSAP to scroll smoothly
+        const yPos = targetEl.getBoundingClientRect().top + window.scrollY - 60;
+        gsap.to(window, {
+          scrollTo: { y: yPos, autoKill: false },
+          duration: 1,
+          ease: 'power3.inOut',
+          onComplete: () => {
+            // Update active link immediately
+            document.querySelectorAll('.header-nav .nav-link').forEach(l => l.classList.remove('active'));
+            if (this.classList.contains('nav-link')) this.classList.add('active');
+          }
         });
-      }, 200);
+        
+        // Fallback if GSAP ScrollToPlugin is missing
+        if (!gsap.plugins.scrollTo) {
+          window.scrollTo({ top: yPos, behavior: 'smooth' });
+        }
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------
+     5. CUSTOM CURSOR
+     ---------------------------------------------------------- */
+  function initCursor() {
+    const cursor = document.getElementById('custom-cursor');
+    if (!cursor || window.matchMedia('(pointer: coarse)').matches) return;
+
+    const label = cursor.querySelector('.cursor-label');
+
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.setProperty('--x', e.clientX + 'px');
+      cursor.style.setProperty('--y', e.clientY + 'px');
+    }, { passive: true });
+
+    document.querySelectorAll('[data-cursor-label]').forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        if (label) label.textContent = el.getAttribute('data-cursor-label');
+        cursor.classList.add('active');
+      });
+      el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+    });
+  }
+
+  /* ----------------------------------------------------------
+     6. AMBIENT PARTICLE NETWORK
+     ---------------------------------------------------------- */
+  function initParticles() {
+    const canvas = document.getElementById('particle-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let w, h;
+    const mouse = { x: -9999, y: -9999 };
+    const count = window.innerWidth < 1024 ? 20 : 40;
+    const connectDist = 140;
+    let particles = [];
+
+    function resize() {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function seed() {
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.25,
+          vy: (Math.random() - 0.5) * 0.25,
+          r: Math.random() * 1.5 + 0.5,
+          a: 0.15 + Math.random() * 0.2,
+        });
+      }
+    }
+
+    resize();
+    seed();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => { resize(); seed(); ScrollTrigger.refresh(); }, 250);
     }, { passive: true });
 
     document.addEventListener('mousemove', (e) => {
-      this.mouse.x = e.clientX;
-      this.mouse.y = e.clientY;
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
     }, { passive: true });
 
-    document.addEventListener('mouseleave', () => {
-      this.mouse.x = -9999;
-      this.mouse.y = -9999;
-    }, { passive: true });
-  }
-
-  _loop() {
-    const ctx = this.ctx;
-    ctx.clearRect(0, 0, this.w, this.h);
-    const ps = this.particles;
-    const len = ps.length;
-
-    for (let i = 0; i < len; i++) {
-      const p = ps[i];
-      const dx = p.x - this.mouse.x;
-      const dy = p.y - this.mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < this.REPEL_R && dist > 0) {
-        const force = (this.REPEL_R - dist) / this.REPEL_R;
-        const angle = Math.atan2(dy, dx);
-        p.vx += Math.cos(angle) * force * force * this.REPEL_F * 0.025;
-        p.vy += Math.sin(angle) * force * force * this.REPEL_F * 0.025;
+    function loop() {
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        const dx = p.x - mouse.x;
+        const dy = p.y - mouse.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 160 && d > 0) {
+          const f = (160 - d) / 160;
+          p.vx += (dx / d) * f * 0.15;
+          p.vy += (dy / d) * f * 0.15;
+        }
+        p.vx *= 0.96;
+        p.vy *= 0.96;
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < -5) p.x = w + 5;
+        if (p.x > w + 5) p.x = -5;
+        if (p.y < -5) p.y = h + 5;
+        if (p.y > h + 5) p.y = -5;
       }
-      p.vx *= 0.97;
-      p.vy *= 0.97;
-      const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-      if (speed > 2.5) { p.vx = (p.vx / speed) * 2.5; p.vy = (p.vy / speed) * 2.5; }
-      if (speed < 0.06) { p.vx += (Math.random() - 0.5) * 0.03; p.vy += (Math.random() - 0.5) * 0.03; }
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < -10) p.x = this.w + 10;
-      if (p.x > this.w + 10) p.x = -10;
-      if (p.y < -10) p.y = this.h + 10;
-      if (p.y > this.h + 10) p.y = -10;
-    }
 
-    for (let i = 0; i < len; i++) {
-      for (let j = i + 1; j < len; j++) {
-        const a = ps[i], b = ps[j];
-        const ddx = a.x - b.x, ddy = a.y - b.y;
-        const d = Math.sqrt(ddx * ddx + ddy * ddy);
-        if (d < this.CONNECT) {
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(0,255,204,${(1 - d / this.CONNECT) * 0.18})`;
-          ctx.lineWidth = 0.6;
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const a = particles[i], b = particles[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < connectDist) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 242, 254, ${(1 - dist / connectDist) * 0.08})`;
+            ctx.lineWidth = 0.6;
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
         }
       }
-    }
 
-    for (let i = 0; i < len; i++) {
-      const p = ps[i];
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(0,255,204,${p.a})`;
-      ctx.fill();
-    }
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(127, 83, 172, ${p.a})`;
+        ctx.fill();
+      }
 
-    requestAnimationFrame(() => this._loop());
+      requestAnimationFrame(loop);
+    }
+    loop();
   }
-}
 
-/* ----------------------------------------------------------
-   3. GSAP "THROWN" ANIMATIONS
-   Elements enter as if tossed into place with a bounce.
-   y:80 -> y:0, back.out(1.7) ease
-   ---------------------------------------------------------- */
-function initThrownAnimations() {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-  gsap.registerPlugin(ScrollTrigger);
-
-  document.querySelectorAll('.thrown').forEach((el) => {
-    gsap.fromTo(el,
-      { y: 80, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        ease: 'back.out(1.7)',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 90%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
-  });
-
-  /* About paragraphs staggered */
-  const about = document.querySelectorAll('.body-text');
-  if (about.length) {
-    gsap.fromTo(about,
-      { y: 60, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.7,
-        stagger: 0.15,
-        ease: 'back.out(1.7)',
-        scrollTrigger: {
-          trigger: about[0],
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
-  }
-}
-
-/* ----------------------------------------------------------
-   4. SIDEBAR ENTRANCE
-   ---------------------------------------------------------- */
-function initSidebarAnim() {
-  if (typeof gsap === 'undefined') return;
-  const items = [
-    ['.sidebar-name',    { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, delay: 0.1 }],
-    ['.sidebar-role',    { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, delay: 0.2 }],
-    ['.sidebar-bio',     { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, delay: 0.3 }],
-    ['.sidebar-nav',     { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, delay: 0.4 }],
-    ['.sidebar-socials', { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, delay: 0.5 }],
-  ];
-  items.forEach(([s, f, t]) => gsap.fromTo(s, f, { ...t, ease: 'back.out(1.7)' }));
-}
-
-/* ----------------------------------------------------------
-   5. SCROLLSPY
-   ---------------------------------------------------------- */
-function initScrollSpy() {
-  const links = document.querySelectorAll('.sidebar-nav-link');
-  const sections = document.querySelectorAll(
-    '#s-about, #s-experience, #s-education, #s-projects, #s-certs, #s-skills, #s-interests'
-  );
-  if (!links.length || !sections.length) return;
-
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) {
-        links.forEach((l) => {
-          l.classList.toggle('active', l.getAttribute('data-section') === e.target.id);
-        });
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '-8% 0px -55% 0px' });
-
-  sections.forEach((s) => obs.observe(s));
-
-  links.forEach((l) => {
-    l.addEventListener('click', (e) => {
-      e.preventDefault();
-      const t = document.querySelector(l.getAttribute('href'));
-      if (t) t.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-}
-
-/* ----------------------------------------------------------
-   6. MOBILE MENU
-   ---------------------------------------------------------- */
-function initMobileMenu() {
-  const btn = document.getElementById('hamburger-toggle');
-  const menu = document.getElementById('mobile-menu-panel');
-  if (!btn || !menu) return;
-
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    btn.classList.toggle('active');
-    menu.classList.toggle('active');
-  });
-
-  menu.querySelectorAll('.mobile-nav-link').forEach((l) => {
-    l.addEventListener('click', () => { btn.classList.remove('active'); menu.classList.remove('active'); });
-  });
-
-  document.addEventListener('click', (e) => {
-    if (menu.classList.contains('active') && !menu.contains(e.target) && !btn.contains(e.target)) {
-      btn.classList.remove('active'); menu.classList.remove('active');
-    }
-  });
-}
-
-/* ----------------------------------------------------------
-   7. INIT
-   ---------------------------------------------------------- */
-document.addEventListener('DOMContentLoaded', () => {
-  initCursorGlow();
-  new ParticleField('particle-canvas');
-  initSidebarAnim();
-  initThrownAnimations();
-  initScrollSpy();
-  initMobileMenu();
-});
+})();
